@@ -6,10 +6,22 @@ import { styles } from './styles'
 export default class ListaTarefas extends Component {
 
     getEstilo() {
-        if (this.props.situacao == 'Concluído') {
+        if (this.props.situacao == 'Concluída') {
             return { color: '#39bf00', fontWeight: 'bold' }
-        } else if (this.props.situacao == 'Atrasado') {
+        } else if (this.props.situacao == 'Atrasada') {
             return { color: '#fa2f5f', fontWeight: 'bold' }
+        } else {
+            return { color: 'black' }
+        }
+    }
+
+    getLevel() {
+        if (this.props.prioridade == 'Alta') {
+            return { color: '#fa2f5f', fontWeight: 'bold' }
+        } else if (this.props.prioridade == 'Média') {
+            return { color: '#db5a04', fontWeight: 'bold' }
+        } else if (this.props.prioridade == 'Baixa') {
+            return { color: '#39bf00', fontWeight: 'bold' }
         } else {
             return { color: 'black' }
         }
@@ -22,6 +34,7 @@ export default class ListaTarefas extends Component {
                     <Text>ID: {this.props.id}</Text>
                     <Text>Tarefa: {this.props.nome}</Text>
                     <Text>Data: {this.props.data}</Text>
+                    <Text style={this.getLevel()}>Prioridade: {this.props.prioridade}</Text>
                     <Text style={this.getEstilo()}>Status: {this.props.situacao}</Text>
                 </View>
                 <View style={styles.btnBox}>

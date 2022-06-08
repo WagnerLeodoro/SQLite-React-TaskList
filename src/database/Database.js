@@ -26,7 +26,7 @@ export default class Database {
                         console.log("Erro Recebido: ", error);
                         console.log("O Banco de dados não está pronto ... Criando Dados");
                         db.transaction((tx) => {
-                            tx.executeSql('CREATE TABLE IF NOT EXISTS Tarefa (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR(250), data VARCHAR(10), situacao VARCHAR(10))');
+                            tx.executeSql('CREATE TABLE IF NOT EXISTS Tarefa (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR(250), data VARCHAR(10), prioridade VARCHAR(10), situacao VARCHAR(10))');
                         }).then(() => {
                             console.log("Tabela criada com Sucesso");
                         }).catch(error => {
@@ -68,8 +68,8 @@ export default class Database {
                         var len = results.rows.length;
                         for (let i = 0; i < len; i++) {
                             let row = results.rows.item(i);
-                            const { id, nome, data, situacao } = row;
-                            listaTarefa.push({ id, nome, data, situacao });
+                            const { id, nome, data, prioridade, situacao } = row;
+                            listaTarefa.push({ id, nome, data, prioridade, situacao });
                         }
                         resolve(listaTarefa);
                     });
@@ -90,7 +90,7 @@ export default class Database {
             this.Conectar().then((db) => {
                 db.transaction((tx) => {
                     //Query SQL para inserir um novo produto   
-                    tx.executeSql('INSERT INTO Tarefa(nome, data, situacao) VALUES (?, ?, ?)', [tarefa.nome, tarefa.data, tarefa.situacao]).then(([tx, results]) => {
+                    tx.executeSql('INSERT INTO Tarefa(nome, data, prioridade, situacao) VALUES (?, ?, ?, ?)', [tarefa.nome, tarefa.data, tarefa.prioridade, tarefa.situacao]).then(([tx, results]) => {
                         resolve(results);
                     });
                 }).then((result) => {

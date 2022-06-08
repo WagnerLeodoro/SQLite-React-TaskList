@@ -12,6 +12,7 @@ export default class App extends Component {
     this.state = {
       nome: "",
       data: "",
+      prioridade: "",
       listaTarefas: []
     }
     this.ListarTarefas()
@@ -22,8 +23,8 @@ export default class App extends Component {
     bd.Listar().then(lista => { this.setState({ listaTarefas: lista }) })
   }
 
-  CadastrarTarefa = (nome, data) => {
-    const novaTarefa = new Tarefa(nome, data, "???");
+  CadastrarTarefa = (nome, data, prioridade) => {
+    const novaTarefa = new Tarefa(nome, data, prioridade, "???");
     const bd = new Database();
     bd.Inserir(novaTarefa);
     this.ListarTarefas()
@@ -67,10 +68,15 @@ export default class App extends Component {
               onChangeText={(valor) => { this.setState({ data: valor }) }}
               style={styles.inputForm}
             />
+            <TextInput
+              placeholder="Digite a prioridade da tarefa"
+              onChangeText={(valor) => { this.setState({ prioridade: valor }) }}
+              style={styles.inputForm}
+            />
           </View>
           <View style={styles.btnBox}>
             <TouchableOpacity style={styles.btnCadastrar}
-              onPress={() => { this.CadastrarTarefa(this.state.nome, this.state.data) }}>
+              onPress={() => { this.CadastrarTarefa(this.state.nome, this.state.data, this.state.prioridade) }}>
               <Text style={{ color: 'white', fontWeight: 'bold' }}>Salvar</Text>
             </TouchableOpacity>
           </View>
@@ -86,6 +92,7 @@ export default class App extends Component {
                 id={item.id}
                 nome={item.nome}
                 data={item.data}
+                prioridade={item.prioridade}
                 situacao={item.situacao}
                 concluir={this.ConcluirTarefa}
                 atrasar={this.AtrasarTarefa}
