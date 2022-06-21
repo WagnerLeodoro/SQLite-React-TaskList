@@ -5,6 +5,7 @@ import ListaTarefas from './src/components/ListaTarefas'
 import Database from './src/database/Database'
 import Tarefa from './src/models/Tarefa'
 import { styles } from './src/styles'
+import RadioButton from './src/components/RadioButton'
 
 export default class App extends Component {
   constructor(props) {
@@ -13,6 +14,7 @@ export default class App extends Component {
       nome: "",
       data: "",
       prioridade: "",
+      selected: 0,
       listaTarefas: []
     }
     this.ListarTarefas()
@@ -68,10 +70,14 @@ export default class App extends Component {
               onChangeText={(valor) => { this.setState({ data: valor }) }}
               style={styles.inputForm}
             />
-            <TextInput
-              placeholder="Digite a prioridade da tarefa"
-              onChangeText={(valor) => { this.setState({ prioridade: valor }) }}
-              style={styles.inputForm}
+            <RadioButton
+              selected={this.state.selected}
+              options={['Alta', 'Média', 'Baixa']}
+              onChangeSelect={(opt, i) => {
+                this.setState({ prioridade: opt });
+                this.setState({ selected: i });
+                console.log(opt, i);
+              }}
             />
           </View>
           <View style={styles.btnBox}>
